@@ -1,43 +1,44 @@
 using System;
 
-class Program
+namespace GCDRecursive
 {
-    static long Gcd(long a, long b)
+    class Program
     {
-        if (b == 0)
-            return a;
-
-        return Gcd(b, a % b);
-    }
-
-    static void Main(string[] args)
-    {
-        Console.WriteLine("محاسبه بزرگترین مقسوم علیه مشترک");
-
-        Console.Write("عدد اول: ");
-        string s1 = Console.ReadLine();
-
-        Console.Write("عدد دوم: ");
-        string s2 = Console.ReadLine();
-
-        // بررسی ورودی
-        if (!long.TryParse(s1, out long x) || !long.TryParse(s2, out long y))
+        static void Main(string[] args)
         {
-            Console.WriteLine("ورودی نامعتبر است");
-            return;
+            Console.WriteLine("محاسبه‌ی بزرگترین مقسوم‌علیه مشترک (GCD) با روش بازگشتی");
+            Console.WriteLine("=====================================================");
+            
+            // دریافت اعداد از کاربر
+            Console.Write("عدد اول را وارد کنید: ");
+            int num1 = Convert.ToInt32(Console.ReadLine());
+            
+            Console.Write("عدد دوم را وارد کنید: ");
+            int num2 = Convert.ToInt32(Console.ReadLine());
+            
+            // فراخوانی تابع بازگشتی
+            int gcd = CalculateGCD(num1, num2);
+            
+            // نمایش نتیجه
+            Console.WriteLine($"\nبزرگترین مقسوم‌علیه مشترک ({num1}, {num2}) = {gcd}");
+            
+            Console.ReadKey();
         }
-
-        x = Math.Abs(x);
-        y = Math.Abs(y);
-
-        if (x == 0 && y == 0)
+        
+        /// <summary>
+        /// تابع بازگشتی برای محاسبه‌ی GCD با استفاده از الگوریتم اقلیدس
+        /// </summary>
+        /// <param name="a">عدد اول</param>
+        /// <param name="b">عدد دوم</param>
+        /// <returns>بزرگترین مقسوم‌علیه مشترک</returns>
+        static int CalculateGCD(int a, int b)
         {
-            Console.WriteLine("GCD تعریف نشده است");
-            return;
+            // حالت پایه: اگر b برابر 0 باشد، a همان GCD است
+            if (b == 0)
+                return Math.Abs(a); // مقدار مطلق برای اعداد منفی
+            
+            // فراخوانی بازگشتی
+            return CalculateGCD(b, a % b);
         }
-
-        long result = Gcd(x, y);
-
-        Console.WriteLine($"GCD({x}, {y}) = {result}");
     }
 }
